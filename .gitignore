@@ -1,0 +1,21 @@
+# Visual Studio
+.vs/
+*.vcxproj.user
+*.vcxproj.filters
+*.vcxproj
+
+# Build files
+Debug/
+Release/
+x64/
+x86/
+
+# Compiled binaries
+*.exe
+*.obj
+*.lib
+*.dll
+*.pdb
+
+# GLFW (if you installed locally)
+glfw/
