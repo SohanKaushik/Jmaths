@@ -4,28 +4,30 @@
 
 #include <vector>
 
-enum rdrtype {
+enum class rdrtype : GLenum {
 	TRIANGLES = GL_TRIANGLES,
 	LINES = GL_LINES,
-	POINTS = GL_POINTS
-};
+	POINTS = GL_POINTS,
+	CONNECT_LINES = GL_LINE_STRIP
+}; 
 
-class mesh {
+class geometry {
 	private:
-		unsigned int VBO = 0;
-		unsigned int VAO = 0;
-		rdrtype type = rdrtype::LINES;
+		unsigned int m_vao = 0;
+		unsigned int m_vbo = 0;
+		int          m_vcount = 0;
+		rdrtype		 m_type;
 
 	public:
-		mesh(const std::vector<float>& vert, rdrtype _type = rdrtype::LINES) {
+		geometry(const std::vector<float>& vert, rdrtype _type = rdrtype::LINES): m_type(_type), m_vcount(vert.size() / 3) {
 
 			// Create and bind VAO
-			glGenVertexArrays(1, &VAO);
-			glBindVertexArray(VAO);
+			glGenVertexArrays(1, &m_vao);
+			glBindVertexArray(m_vao);
 
 			// Create and bind VBO
-			glGenBuffers(1, &VBO);
-			glBindBuffer(GL_ARRAY_BUFFER, VBO);
+			glGenBuffers(1, &m_vbo);
+			glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
 	
 			// send the data to gpu
 			glBufferData(GL_ARRAY_BUFFER, vert.size() * sizeof(float), vert.data(), GL_STATIC_DRAW);
@@ -33,10 +35,10 @@ class mesh {
 			// position
 			glVertexAttribPointer(
 				0,                  // location in shader	
-				2,                  // 3 floats per vertex
+				3,                  // 3 floats per vertex
 				GL_FLOAT,
 				GL_FALSE,
-				2 * sizeof(float),  // stride
+				3 * sizeof(float),  // stride
 				(void*)0            // offset
 			);
 	
@@ -44,15 +46,20 @@ class mesh {
 	
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
 			glBindVertexArray(0);
-
-		
-			// render type
-			type = _type;
 		}
 	
+		// no copying
+		geometry(const geometry&) = delete;
+		geometry& operator=(const geometry&) = delete;
+
+		~geometry() {
+			glDeleteVertexArrays(1, &m_vao);
+			glDeleteBuffers(1, &m_vbo);
+		}
+
 		void draw() {
-			glBindVertexArray(VAO);
-			glDrawArrays(type, 0, 2);
+			glBindVertexArray(m_vao);
+			glDrawArrays(static_cast<GLenum>(m_type), 0, m_vcount);
 		}
 };
 

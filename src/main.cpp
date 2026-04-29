@@ -6,10 +6,10 @@
 
 // Vertex Shader source code
 const char* vs_src = "#version 330 core\n"
-"layout (location = 0) in vec2 aPos;\n"
+"layout (location = 0) in vec3 aPos;\n"
 "void main()\n"
 "{\n"
-"   gl_Position = vec4(aPos.x, aPos.y, 0, 1.0);\n"
+"   gl_Position = vec4(aPos, 1.0);\n"
 "}\0";
 //Fragment Shader source code
 const char* fragmentShaderSource = "#version 330 core\n"
@@ -31,16 +31,11 @@ int main() {
         return -1;
     }
 
-    std::vector<float> vert1 = {
-        // horizontal line
-        -1.0f, 0.0f,
-         1.0f, 0.0f,
-    };
 
     std::vector<float> vert2 = {
         // vertical line
-         0.0f, -1.0f,
-         0.0f,  1.0f
+         0.0f, -1.0f, 0.0f,
+         0.0f,  1.0f, 0.0f
     };
 
 
@@ -64,8 +59,6 @@ int main() {
     glDeleteShader(vs);
     glDeleteShader(fs);
 
-    auto line1 = std::make_unique<mesh>(vert1);
-    auto line2 = std::make_unique<mesh>(vert2);
 
     while (!glfwWindowShouldClose(_wind))
     {
@@ -75,10 +68,28 @@ int main() {
 
 
         glUseProgram(shaderp);
-        line1->draw();
-        line2->draw();
+        //line1->draw();
+        //line2->draw();
+        glPointSize(2.0f);
 
+        std::vector<float> point1 = { 0,0,0 };
+        std::vector<float> point2 = { 0,0.5,0 };
 
+        std::vector<float> point3 = { 0.5,0,0 };
+        std::vector<float> point4 = { 0,-0.5,0 };
+
+        std::vector<float> point5 = { 0,0,0 };
+
+        std::vector<float> points;
+        points.insert(points.end(), point1.begin(), point1.end());
+        points.insert(points.end(), point2.begin(), point2.end());
+        points.insert(points.end(), point3.begin(), point3.end());
+        points.insert(points.end(), point4.begin(), point4.end());
+        points.insert(points.end(), point5.begin(), point5.end());
+
+        auto lines = std::make_unique<geometry>(points, rdrtype::CONNECT_LINES);
+
+        lines->draw();
 
         // Swap buffers
         glfwSwapBuffers(_wind);
