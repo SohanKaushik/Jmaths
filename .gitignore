@@ -11,10 +11,9 @@ x64/
 x86/
 
 # Compiled binaries
+# Compiled binaries
 *.exe
 *.obj
-*.lib
-*.dll
 *.pdb
 
 # GLFW (if you installed locally)
