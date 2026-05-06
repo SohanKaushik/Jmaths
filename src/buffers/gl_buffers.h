@@ -1,8 +1,5 @@
-#include <iostream>
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-
-#include <vector>
+#pragma once
+#include "../pch.h"
 
 enum class rdrtype : GLenum {
 	TRIANGLES = GL_TRIANGLES,
@@ -12,55 +9,55 @@ enum class rdrtype : GLenum {
 }; 
 
 class geometry {
-	private:
-		unsigned int m_vao = 0;
-		unsigned int m_vbo = 0;
-		int          m_vcount = 0;
-		rdrtype		 m_type;
+    private:
+        GLuint m_vao = 0;
+        GLuint m_vbo = 0;
+        std::vector<glm::vec3> m_vert = std::vector<glm::vec3>({});
+        rdrtype m_type = rdrtype::LINES;
+    
+    public:
+        geometry(const std::vector<glm::vec3>& vert, rdrtype type = rdrtype::LINES)
+            : m_vert(vert), m_type(type)
+        {
+            glGenVertexArrays(1, &m_vao);
+            glGenBuffers(1, &m_vbo);
+    
+            glBindVertexArray(m_vao);
+            glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
+    
+            glBufferData(GL_ARRAY_BUFFER,
+                m_vert.size() * sizeof(glm::vec3),
+                m_vert.data(),
+                GL_STATIC_DRAW);
+    
+            glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE,
+                sizeof(glm::vec3), (void*)0);
+    
+            glEnableVertexAttribArray(0);
+        }
 
-	public:
-		geometry(const std::vector<float>& vert, rdrtype _type = rdrtype::LINES): m_type(_type), m_vcount(vert.size() / 3) {
+        geometry() = delete;
 
-			// Create and bind VAO
-			glGenVertexArrays(1, &m_vao);
-			glBindVertexArray(m_vao);
-
-			// Create and bind VBO
-			glGenBuffers(1, &m_vbo);
-			glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
-	
-			// send the data to gpu
-			glBufferData(GL_ARRAY_BUFFER, vert.size() * sizeof(float), vert.data(), GL_STATIC_DRAW);
-	
-			// position
-			glVertexAttribPointer(
-				0,                  // location in shader	
-				3,                  // 3 floats per vertex
-				GL_FLOAT,
-				GL_FALSE,
-				3 * sizeof(float),  // stride
-				(void*)0            // offset
-			);
-	
-			glEnableVertexAttribArray(0);
-	
-			glBindBuffer(GL_ARRAY_BUFFER, 0);
-			glBindVertexArray(0);
-		}
-	
-		// no copying
-		geometry(const geometry&) = delete;
-		geometry& operator=(const geometry&) = delete;
-
-		~geometry() {
-			glDeleteVertexArrays(1, &m_vao);
-			glDeleteBuffers(1, &m_vbo);
-		}
-
-		void draw() {
-			glBindVertexArray(m_vao);
-			glDrawArrays(static_cast<GLenum>(m_type), 0, m_vcount);
-		}
+        void update(const std::vector<glm::vec3>& nv) {
+            m_vert = nv;
+    
+            glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
+            glBufferData(GL_ARRAY_BUFFER,
+                m_vert.size() * sizeof(glm::vec3),
+                m_vert.data(),
+                GL_DYNAMIC_DRAW);
+        }
+    
+        void draw() {
+            glBindVertexArray(m_vao);
+            glDrawArrays(static_cast<GLenum>(m_type), 0, m_vert.size());
+        }
+    
+        ~geometry()
+        {
+            glDeleteBuffers(1, &m_vbo);
+            glDeleteVertexArrays(1, &m_vao);
+        }
 };
 
 
