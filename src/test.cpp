@@ -3,18 +3,65 @@
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/string_cast.hpp>
 
+// Vertex Shader source code
+const char* vs_src = "#version 330 core\n"
+"layout (location = 0) in vec3 aPos;\n"
+"uniform mat4 MVP;\n"
+"void main()\n"
+"{\n"
+"   gl_Position = MVP * vec4(aPos, 1.0);\n"
+"}\0";
+//Fragment Shader source code
+const char* fragmentShaderSource = "#version 330 core\n"
+"out vec4 FragColor;\n"
+"void main()\n"
+"{\n"
+"   FragColor = vec4(0.0, 0.0, 0.0, 1.0);\n"
+"}\n\0";
+
 
 int main() {
     Scene sc1;  
+    float aspect = 800.0f / 500.0f;
 
-    JObjects obj1;
-    obj1.set_position({ 0,0,-100 });
+    GLuint vs = glCreateShader(GL_VERTEX_SHADER);
+    glShaderSource(vs, 1, &vs_src, NULL);
+    glCompileShader(vs);
 
-    sc1.add(obj1);
+    GLuint fs = glCreateShader(GL_FRAGMENT_SHADER);
+    glShaderSource(fs, 1, &fragmentShaderSource, NULL);
+    glCompileShader(fs);
+
+    GLuint Shaderp = glCreateProgram();
+    glAttachShader(Shaderp, vs);
+    glAttachShader(Shaderp, fs);
+    glLinkProgram(Shaderp);
+
+    glDeleteShader(vs);
+    glDeleteShader(fs);
+
+
+    glm::mat4 view = glm::mat4(1.0f); // pan, zoom, rotate 
+    glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)aspect, 0.1f, 1000.0f); // projection
+
+    Axes axes;
+    axes.make_grid(2.0f);
+    axes.set_position({ 10,0,-20 });
+
+    //sc1.add(obj1);
+    sc1.add(axes);
 
     while (sc1.is_running()) {
-        std::cout << glm::to_string(obj1.m_transform.position) << "\n";
+
+        glUseProgram(Shaderp);
+        for (auto* obj : sc1._all_objects)
+        {
+            glm::mat4 MVP = projection * view * obj->get_model();
+            unsigned int loc = glGetUniformLocation(Shaderp, "MVP");
+            glUniformMatrix4fv(loc, 1, GL_FALSE, &MVP[0][0]);
+        }
         sc1.update();
+
     }
 
     return 0;

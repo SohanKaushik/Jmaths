@@ -13,10 +13,10 @@ class geometry {
         GLuint m_vao = 0;
         GLuint m_vbo = 0;
         std::vector<glm::vec3> m_vert = std::vector<glm::vec3>({});
-        rdrtype m_type = rdrtype::LINES;
+        rdrtype m_type = rdrtype::CONNECT_LINES;
     
     public:
-        geometry(const std::vector<glm::vec3>& vert, rdrtype type = rdrtype::LINES)
+        geometry(const std::vector<glm::vec3>& vert, rdrtype type = rdrtype::CONNECT_LINES)
             : m_vert(vert), m_type(type)
         {
             glGenVertexArrays(1, &m_vao);
@@ -28,7 +28,7 @@ class geometry {
             glBufferData(GL_ARRAY_BUFFER,
                 m_vert.size() * sizeof(glm::vec3),
                 m_vert.data(),
-                GL_STATIC_DRAW);
+                GL_DYNAMIC_DRAW);
     
             glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE,
                 sizeof(glm::vec3), (void*)0);
@@ -50,7 +50,7 @@ class geometry {
     
         void draw() {
             glBindVertexArray(m_vao);
-            glDrawArrays(static_cast<GLenum>(m_type), 0, m_vert.size());
+            glDrawArrays(static_cast<GLenum>(m_type), 0, static_cast<GLsizei>(m_vert.size()));
         }
     
         ~geometry()

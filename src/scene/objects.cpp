@@ -1,10 +1,9 @@
 #include "objects.h"
 
-jmaths::scene::JObjects::JObjects() {
-}
+jmaths::scene::JObjects::JObjects() {}
 
 jmaths::scene::JObjects::JObjects(const std::vector<glm::vec3>& vert) {
-
+	m_geo = std::make_unique<geometry>(vert);
 }
 
 void jmaths::scene::JObjects::set_position(const glm::vec3& t) {
@@ -54,8 +53,15 @@ void jmaths::scene::JObjects::update_transforms() {
 	transform_dirty = false;
 }
 
-void jmaths::scene::JObjects::render_queue() {
+void jmaths::scene::JObjects::draw() {
+	m_geo->draw();
+}
+
+void jmaths::scene::JObjects::feed_vert(const std::vector<glm::vec3>& _v, rdrtype rdr) {
+	if (!m_geo)
+		m_geo = std::make_unique<geometry>(_v, rdr);
 	
+	m_geo->update(_v);
 }
 
 //void jmaths::scene::JObjects::draw(Shader& Shader) const {

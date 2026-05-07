@@ -14,7 +14,6 @@ namespace jmaths {
 		};
 
 
-
 		class JObjects {
 
 		private:
@@ -37,7 +36,10 @@ namespace jmaths {
 
 			// could be optimized like such update_rot(), update_trans(), update_scale() seperately
 			void update_transforms();
-			void render_queue(); // render queue
+			void draw(); // render queue
+
+		protected:
+			void feed_vert(const std::vector<glm::vec3>& _v, rdrtype rdr);
 		};
 
 	}

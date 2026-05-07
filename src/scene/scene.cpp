@@ -17,9 +17,7 @@ namespace jmaths::scene {
     }
 
     Scene::~Scene() {
-        for (auto* obj : _all_objects) {
-            delete obj;
-        }
+        _all_objects.clear();
 
         if (window) {
             glfwDestroyWindow(window);
@@ -54,8 +52,9 @@ namespace jmaths::scene {
             obj->update_transforms();
         }
         for (auto* obj : _all_objects) {
-            obj->render_queue();
+            obj->draw();
         }
+
         glfwSwapBuffers(window);
         glfwPollEvents();
     }

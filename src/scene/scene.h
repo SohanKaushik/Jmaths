@@ -21,7 +21,7 @@ namespace jmaths::scene {
         void remove(JObjects& obj);
         void run();
 
-    private:
+    public: // intentionally made public 
         std::vector<JObjects*> _all_objects;
         GLFWwindow* window;
     };
