@@ -1,6 +1,7 @@
 #pragma once
 #include "../pch.h"
 #include "objects.h"
+#include "Camera.h"
 
 namespace jmaths::scene {
     class Scene {
@@ -20,6 +21,7 @@ namespace jmaths::scene {
         void add(JObjects& obj);
         void remove(JObjects& obj);
         void run();
+        std::unique_ptr<camera::Camera> camera;
 
     public: // intentionally made public 
         std::vector<JObjects*> _all_objects;

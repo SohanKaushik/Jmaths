@@ -40,23 +40,21 @@ int main() {
     glDeleteShader(vs);
     glDeleteShader(fs);
 
-
-    glm::mat4 view = glm::mat4(1.0f); // pan, zoom, rotate 
-    glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)aspect, 0.1f, 1000.0f); // projection
-
     Axes axes;
-    axes.make_grid(2.0f);
-    axes.set_position({ 10,0,-20 });
+    axes.make_grid(1);
+    axes.set_position({ 0,0,-20});
+    axes.set_scale({ 20,20,20});
+
 
     //sc1.add(obj1);
     sc1.add(axes);
+    
 
     while (sc1.is_running()) {
 
         glUseProgram(Shaderp);
-        for (auto* obj : sc1._all_objects)
-        {
-            glm::mat4 MVP = projection * view * obj->get_model();
+        for (auto* obj : sc1._all_objects) {
+            glm::mat4 MVP = sc1.camera->get_pvmatrix() * obj->get_model();
             unsigned int loc = glGetUniformLocation(Shaderp, "MVP");
             glUniformMatrix4fv(loc, 1, GL_FALSE, &MVP[0][0]);
         }

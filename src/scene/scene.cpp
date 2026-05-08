@@ -36,6 +36,10 @@ namespace jmaths::scene {
             std::cout << "Failed to initialize GLAD" << std::endl;
         }
         glViewport(0, 0, 800, 500);
+
+
+        // camera init
+        camera = std::make_unique<camera::Camera>();
     }
 
     bool Scene::is_running() {
@@ -44,6 +48,7 @@ namespace jmaths::scene {
 
     void Scene::update() {
         if (window) {
+            glm::vec3 bg = { 0.12f, 0.12f, 0.14f };
             glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT);
         }
