@@ -35,6 +35,10 @@ void jmaths::scene::JObjects::set_scale(const float& s) {
 	transform_dirty = true;
 }
 
+void jmaths::scene::JObjects::set_color(const glm::vec3& c) {
+	m_color = c;
+}
+
 glm::mat4 jmaths::scene::JObjects::get_model() {
 	return m_model;
 }

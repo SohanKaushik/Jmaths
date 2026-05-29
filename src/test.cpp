@@ -1,8 +1,5 @@
 #include <jmaths.h>
 
-#define GLM_ENABLE_EXPERIMENTAL
-#include <glm/gtx/string_cast.hpp>
-
 using namespace jmaths::animations;
 
 int main() {
@@ -16,7 +13,7 @@ int main() {
     Circle circle(20, 1);
     circle.set_position({ 0,0,0 });
 
-    Circle circle1(10, 1);
+    Circle circle1(50, 1);
     circle1.set_position({ 0,0,0 });
 
   
@@ -24,7 +21,10 @@ int main() {
     sc1.add(circle);
     sc1.add(circle1);
 
-    
+    circle.set_color({ 0.0f, 0.0f, 0.95f });   // neon cyan
+    circle1.set_color({ 1.0f, 0.25f, 0.75f });  // neon pink
+
+
     while (sc1.is_running()) {
 
         // code

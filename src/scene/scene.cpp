@@ -68,6 +68,7 @@ namespace jmaths::scene {
         for (auto* obj : _all_objects) {
             m_shader.SetUniformMat4f("pv", camera->get_pvmatrix());
             m_shader.SetUniformMat4f("u_model", obj->get_model());
+            m_shader.SetUniform3fv("u_color", obj->m_color);
             obj->draw();
         }
 

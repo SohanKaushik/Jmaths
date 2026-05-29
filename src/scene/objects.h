@@ -19,6 +19,7 @@ namespace jmaths {
 		private:
 			bool transform_dirty = true;
 			glm::mat4 m_model = glm::mat4(1.0f);
+			
 
 		public:
 			std::unique_ptr<geometry> m_geo;
@@ -29,12 +30,13 @@ namespace jmaths {
 
 			void set_scale(const glm::vec3& s);
 			void set_scale(const float& s);
-
+			void set_color(const glm::vec3& c);
 			glm::mat4 get_model();
 
 		public:
 			// will deal with it later
 			Transform m_transform = {};
+			glm::vec3 m_color = glm::vec3(0.0f);
 
 			// could be optimized like such update_rot(), update_trans(), update_scale() seperately
 			void update_transforms();
