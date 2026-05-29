@@ -7,6 +7,7 @@ namespace jmaths:: scene {
 	class Axes : public JObjects {
 
 	public:
+		Axes();
 		void make_grid(int half_size, float spacing = 1.0f);
 	};
 }

@@ -2,6 +2,12 @@
 
 using namespace jmaths::scene;
 
+jmaths::scene::Axes::Axes() {
+    feed_vert(std::vector<glm::vec3>{
+        {0, 0, 0}
+    }, rdrtype::LINES);
+}
+
 void Axes::make_grid(int half_size, float spacing) {
     std::vector<glm::vec3> verts;
 

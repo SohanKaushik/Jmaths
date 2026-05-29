@@ -1,6 +1,7 @@
 #pragma once
 #include "../pch.h"
 #include "../buffers/gl_buffers.h"
+#include "../scene/objects.h"
 
 namespace jmaths::animations {
 
@@ -8,6 +9,8 @@ namespace jmaths::animations {
 
 		public:
 			Animations();
+
+			void play(jmaths::scene::JObjects& obj, float duration = 5.0f);
 			void play(const std::vector<glm::vec3>& points, float duration = 5.0f);
 			void render();
 

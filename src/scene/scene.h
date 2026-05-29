@@ -25,6 +25,7 @@ namespace jmaths::scene {
 
     public: // intentionally made public 
         std::vector<JObjects*> _all_objects;
+        Shader m_shader;
         GLFWwindow* window;
     };
 }

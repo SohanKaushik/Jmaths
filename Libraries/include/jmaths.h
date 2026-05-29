@@ -8,3 +8,8 @@
 using namespace jmaths::scene;
 
 #include "../src/scene/axes.h"
+
+#include "../src/scene/primitives/Circle.h"
+using namespace jmaths::primitives;
+
+#include "../src/animations/play.h"

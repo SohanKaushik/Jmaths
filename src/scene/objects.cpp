@@ -3,6 +3,7 @@
 jmaths::scene::JObjects::JObjects() {}
 
 jmaths::scene::JObjects::JObjects(const std::vector<glm::vec3>& vert) {
+	transform_dirty = true;
 	m_geo = std::make_unique<geometry>(vert);
 }
 
@@ -24,6 +25,13 @@ void jmaths::scene::JObjects::set_scale(const glm::vec3& s) {
 	if (m_transform.scale == s) return;
 
 	m_transform.scale = s;
+	transform_dirty = true;
+}
+
+void jmaths::scene::JObjects::set_scale(const float& s) {
+	if (m_transform.scale == glm::vec3(s,s,s)) return;
+
+	m_transform.scale = glm::vec3(s,s,s);
 	transform_dirty = true;
 }
 

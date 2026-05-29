@@ -24,7 +24,7 @@ namespace jmaths {
 			public:
 				Camera();
 				void set_projection(Mode mode);
-				const glm::mat4& get_pvmatrix();
+				glm::mat4 get_pvmatrix();
 				void update_projection();
 
 			};

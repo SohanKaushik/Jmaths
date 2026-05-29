@@ -5,7 +5,8 @@ enum class rdrtype : GLenum {
 	TRIANGLES = GL_TRIANGLES,
 	LINES = GL_LINES,
 	POINTS = GL_POINTS,
-	CONNECT_LINES = GL_LINE_STRIP
+	CONNECT_LINES = GL_LINE_STRIP,
+    LOOP = GL_LINE_LOOP
 }; 
 
 class geometry {

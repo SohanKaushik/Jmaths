@@ -19,14 +19,16 @@ namespace jmaths {
 		private:
 			bool transform_dirty = true;
 			glm::mat4 m_model = glm::mat4(1.0f);
-			std::unique_ptr<geometry> m_geo;
 
 		public:
+			std::unique_ptr<geometry> m_geo;
 			JObjects();
 			JObjects(const std::vector<glm::vec3>& vert);
 			void set_position(const glm::vec3& t);
 			void set_rotation(const glm::vec3& r);
+
 			void set_scale(const glm::vec3& s);
+			void set_scale(const float& s);
 
 			glm::mat4 get_model();
 
