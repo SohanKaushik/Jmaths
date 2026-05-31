@@ -39,9 +39,10 @@ class geometry {
 
         geometry() = delete;
 
-        void update(const std::vector<glm::vec3>& nv) {
+        void update(const std::vector<glm::vec3>& nv, rdrtype rdr) {
             m_vert = nv;
-    
+            m_type = rdr;
+
             glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
             glBufferData(GL_ARRAY_BUFFER,
                 m_vert.size() * sizeof(glm::vec3),

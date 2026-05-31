@@ -79,4 +79,12 @@ namespace jmaths::scene {
     void Scene::add(JObjects& obj) {
         _all_objects.push_back(&obj);
     }
+
+
+    /*void Scene::plot(std::function<float(float)> fn) {
+        for (float x = -5.0f; x <= 5.0f; x += 1.0f) {
+            float y = fn(x);
+            printf("x = %.1f, y = %.1f\n", x, y);
+        }
+    }*/
 }

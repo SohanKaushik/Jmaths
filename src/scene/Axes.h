@@ -9,5 +9,6 @@ namespace jmaths:: scene {
 	public:
 		Axes();
 		void make_grid(int half_size, float spacing = 1.0f);
+		void plot(std::function<float(float)> fn, float samples = 100, float step = 0.5f);
 	};
 }

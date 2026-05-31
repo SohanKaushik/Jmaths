@@ -33,7 +33,7 @@ namespace jmaths::animations {
                 m_points.begin() + m_cursor
             );
 
-            m_geo->update(visible);
+            //m_geo->update(visible);
         }
 
         if (m_geo)

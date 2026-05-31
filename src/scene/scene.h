@@ -18,8 +18,14 @@ namespace jmaths::scene {
         void init();
         bool is_running();
         void update();
+
         void add(JObjects& obj);
         void remove(JObjects& obj);
+        
+
+        // externals
+        //void plot(std::function<float(float)> x);
+
         void run();
         std::unique_ptr<camera::Camera> camera;
 

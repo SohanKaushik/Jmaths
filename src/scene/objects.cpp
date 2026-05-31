@@ -73,7 +73,7 @@ void jmaths::scene::JObjects::feed_vert(const std::vector<glm::vec3>& _v, rdrtyp
 	if (!m_geo)
 		m_geo = std::make_unique<geometry>(_v, rdr);
 	
-	m_geo->update(_v);
+	m_geo->update(_v, rdr);
 }
 
 //void jmaths::scene::JObjects::draw(Shader& Shader) const {
