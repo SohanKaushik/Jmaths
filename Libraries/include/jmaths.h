@@ -13,3 +13,8 @@ using namespace jmaths::scene;
 using namespace jmaths::primitives;
 
 #include "../src/animations/play.h"
+
+
+// maths
+#include "../src/maths/range.h"
+using namespace jmaths::utility;

@@ -3,6 +3,10 @@
 #include "objects.h"
 #include "Camera.h"
 
+
+// externals
+#include "../src/maths/range.h"
+
 namespace jmaths::scene {
     class Scene {
     private:
@@ -26,6 +30,9 @@ namespace jmaths::scene {
         // externals
         //void plot(std::function<float(float)> x);
         void shift(float x = 0, float y = 0, float z = 0);
+
+        //maths
+        utility::Range range(float min, float max, float step = 0.1f);
 
         void run();
         std::unique_ptr<camera::Camera> camera;

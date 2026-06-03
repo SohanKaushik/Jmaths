@@ -26,14 +26,21 @@ void Axes::make_grid(int half_size, float spacing) {
     feed_vert(verts, rdrtype::LINES);
 }
 
-void jmaths::scene::Axes::plot(std::function<float(float)> fn, float samples, float step) {
-    
-    std::vector<glm::vec3> verts;
-    for (float x = -samples; x <= samples; x += step) {
-        float y = fn(x);
-        printf("x = %.1f, y = %.1f\n", x, y);
 
-        verts.push_back({ x, y, 0 });
+void jmaths::scene::Axes::plot(std::function<float(float)> fn,
+    float samples,
+    float step)
+{
+    plot(fn, utility::Range{ -samples, samples, step });
+}
+
+void jmaths::scene::Axes::plot(std::function<float(float)> fn,
+    utility::Range range)
+{
+    std::vector<glm::vec3> verts;
+
+    for (float x = range.min; x <= range.max; x += range.step) {
+        verts.push_back({ x, fn(x), 0.0f });
     }
 
     feed_vert(verts, rdrtype::CONNECT_LINES);

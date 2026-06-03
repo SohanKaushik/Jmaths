@@ -1,4 +1,5 @@
 #include "objects.h"
+#include "scene.h"
 
 jmaths::scene::JObjects::JObjects() {}
 
@@ -49,6 +50,7 @@ void jmaths::scene::JObjects::shift(float x, float y, float z) {
 	m_transform.position = glm::vec3(m_transform.position + glm::vec3(x, y, z));
 	transform_dirty = true;
 }
+
 
 void jmaths::scene::JObjects::update_transforms() {
 

@@ -6,18 +6,19 @@ int main() {
     Scene sc1;  
 
     Axes axes;
-    axes.make_grid(5);
+    axes.make_grid(9);
     axes.set_scale(10);
     axes.set_position({0,0,-20});
 
-    Circle circle(20, 1);
+    Circle circle = Circle(20, 1);
     circle.set_position({ 0,0,0 });
 
-    Circle circle1(50, 1);
+    Circle circle1 = Circle(20, 1);
     circle1.set_position({ 0,0,0 });
 
-    axes.plot([](float x) { return cos(x); },10, 0.1f);
-    axes.plot([](float x) { return 5 *cos(2*x); },10, 0.1f);
+    //axes.plot([](float x) { return cos(x); } ,10, 0.1f);
+    axes.plot([](float x) { return cos(x); }, range(10));
+    axes.plot([](float x) { return sin(x); });
   
     sc1.add(axes);
     sc1.add(circle);
