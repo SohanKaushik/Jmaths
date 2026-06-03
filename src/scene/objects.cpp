@@ -4,7 +4,7 @@ jmaths::scene::JObjects::JObjects() {}
 
 jmaths::scene::JObjects::JObjects(const std::vector<glm::vec3>& vert) {
 	transform_dirty = true;
-	m_geo = std::make_unique<geometry>(vert);
+	m_geo[0] = std::make_unique<geometry>(vert);
 }
 
 void jmaths::scene::JObjects::set_position(const glm::vec3& t) {
@@ -66,14 +66,16 @@ void jmaths::scene::JObjects::update_transforms() {
 }
 
 void jmaths::scene::JObjects::draw() {
-	m_geo->draw();
+	for (auto& obj : m_geo) {
+		obj->draw();
+	}
 }
 
 void jmaths::scene::JObjects::feed_vert(const std::vector<glm::vec3>& _v, rdrtype rdr) {
-	if (!m_geo)
+	/*if (!m_geo)
 		m_geo = std::make_unique<geometry>(_v, rdr);
-	
-	m_geo->update(_v, rdr);
+	*/
+	m_geo.push_back(std::make_unique<geometry>(_v, rdr));
 }
 
 //void jmaths::scene::JObjects::draw(Shader& Shader) const {

@@ -22,7 +22,7 @@ namespace jmaths {
 			
 
 		public:
-			std::unique_ptr<geometry> m_geo;
+			std::vector<std::unique_ptr<geometry>> m_geo;
 			JObjects();
 			JObjects(const std::vector<glm::vec3>& vert);
 			void set_position(const glm::vec3& t);
