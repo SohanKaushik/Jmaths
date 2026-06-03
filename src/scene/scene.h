@@ -25,6 +25,7 @@ namespace jmaths::scene {
 
         // externals
         //void plot(std::function<float(float)> x);
+        void shift(float x = 0, float y = 0, float z = 0);
 
         void run();
         std::unique_ptr<camera::Camera> camera;

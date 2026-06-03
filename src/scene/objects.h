@@ -33,6 +33,9 @@ namespace jmaths {
 			void set_color(const glm::vec3& c);
 			glm::mat4 get_model();
 
+
+			void shift(float x = 0, float y = 0, float z = 0);
+
 		public:
 			// will deal with it later
 			Transform m_transform = {};

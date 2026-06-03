@@ -80,6 +80,8 @@ namespace jmaths::scene {
         _all_objects.push_back(&obj);
     }
 
+   
+
 
     /*void Scene::plot(std::function<float(float)> fn) {
         for (float x = -5.0f; x <= 5.0f; x += 1.0f) {

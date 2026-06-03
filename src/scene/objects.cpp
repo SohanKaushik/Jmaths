@@ -43,6 +43,13 @@ glm::mat4 jmaths::scene::JObjects::get_model() {
 	return m_model;
 }
 
+void jmaths::scene::JObjects::shift(float x, float y, float z) {
+	if (m_transform.position == glm::vec3(x,y,z)) return;
+
+	m_transform.position = glm::vec3(m_transform.position + glm::vec3(x, y, z));
+	transform_dirty = true;
+}
+
 void jmaths::scene::JObjects::update_transforms() {
 
 	if (!transform_dirty) return;
