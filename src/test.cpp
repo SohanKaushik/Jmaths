@@ -3,10 +3,11 @@
 using namespace jmaths::animations;
 
 int main() {
-    Scene sc1;  
+    Scene sc1 = Scene();  
 
-    Axes axes;
-    axes.make_grid(9);
+    Axes axes = Axes({ -10,10,1 }, { -10, 10, 1 });
+
+    //axes.make_grid(9);
     axes.set_scale(10);
     axes.set_position({0,0,-20});
 
@@ -21,7 +22,7 @@ int main() {
     axes.plot([](float x) { return sin(x); });
   
     sc1.add(axes);
-    sc1.add(circle);
+    //sc1.add(circle);
   
   //  sc1.add(circle1);
 

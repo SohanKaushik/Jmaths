@@ -3,9 +3,43 @@
 using namespace jmaths::scene;
 
 jmaths::scene::Axes::Axes() {
-    feed_vert(std::vector<glm::vec3>{
-        {0, 0, 0}
-    }, rdrtype::LINES);
+
+    std::vector<glm::vec3> _verts;
+
+    // y axis
+    _verts.push_back({0,-100,0});
+    _verts.push_back({0,100,0});
+
+    // x axis
+    _verts.push_back({-100,0,0});
+    _verts.push_back({100,0,0});
+
+    feed_vert(_verts, rdrtype::LINES);
+}
+
+jmaths::scene::Axes::Axes(utility::Range x, utility::Range y) {
+
+    std::vector<glm::vec3> _verts;
+
+    // y axis
+    _verts.push_back({ 0, y.min, 0 });
+    _verts.push_back({ 0, y.max, 0 });
+
+    // x axis
+    _verts.push_back({ x.min, 0, 0 });
+    _verts.push_back({ x.max, 0, 0 });
+
+    for (float i = x.min; i <= x.max; i += x.step) {
+        _verts.push_back({ i, -0.1f, 0 });
+        _verts.push_back({ i,  0.1f, 0 });
+    }
+
+    for (float i = y.min; i <= y.max; i += y.step) {
+        _verts.push_back({ -0.1f, i, 0 });
+        _verts.push_back({ 0.1f, i, 0 });
+    }
+
+    feed_vert(_verts, rdrtype::LINES);
 }
 
 void Axes::make_grid(int half_size, float spacing) {
