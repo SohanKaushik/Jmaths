@@ -1,4 +1,5 @@
 #include <jmaths.h>
+#include "../src/scene/primitives/Arrow.h"
 
 using namespace jmaths::animations;
 
@@ -7,7 +8,7 @@ int main() {
 
     Axes axes = Axes({ -10,10,1 }, { -10, 10, 1 });
 
-    //axes.make_grid(9);
+    //axes.make_grid(8);
     axes.set_scale(10);
     axes.set_position({0,0,-20});
 
@@ -19,9 +20,11 @@ int main() {
 
     //axes.plot([](float x) { return cos(x); } ,10, 0.1f);
     axes.plot([](float x) { return cos(x); }, range(10));
-    axes.plot([](float x) { return sin(x); });
+    //axes.plot([](float x) { return sin(x); });
   
+
     sc1.add(axes);
+
     //sc1.add(circle);
   
   //  sc1.add(circle1);

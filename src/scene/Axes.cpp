@@ -1,4 +1,5 @@
 #include "Axes.h"
+#include "primitives/Arrow.h"
 
 using namespace jmaths::scene;
 
@@ -38,6 +39,16 @@ jmaths::scene::Axes::Axes(utility::Range x, utility::Range y) {
         _verts.push_back({ -0.1f, i, 0 });
         _verts.push_back({ 0.1f, i, 0 });
     }
+
+    // pointing arrow
+    _verts.push_back({x.max, 0.2, 0});
+    _verts.push_back({x.max, -0.2, 0});
+
+    _verts.push_back({ x.max, 0.2, 0 });
+    _verts.push_back({x.max + 0.4, 0, 0});
+
+    _verts.push_back({x.max + 0.4, 0, 0});
+    _verts.push_back({ x.max, -0.2, 0 });
 
     feed_vert(_verts, rdrtype::LINES);
 }
