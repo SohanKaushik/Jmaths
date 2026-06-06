@@ -14,22 +14,28 @@ int main() {
 
     Circle circle = Circle(20, 1);
     circle.set_position({ 0,0,0 });
+    circle.set_color({1,0,0});
 
     Circle circle1 = Circle(20, 1);
     circle1.set_position({ 0,0,0 });
 
+    Line line = Line({0,0}, {100,100});
+    line.set_color({1,0,0});
+
     //axes.plot([](float x) { return cos(x); } ,10, 0.1f);
-    axes.plot([](float x) { return cos(x); }, range(10));
+    //axes.plot([](float x) { return cos(x); }, range(0,10,0.1));
+    //axes.plot([](float x) { return 1/x; }, range(-10,10,0.1));
+
     //axes.plot([](float x) { return sin(x); });
   
 
     sc1.add(axes);
 
     //sc1.add(circle);
-  
+    sc1.add(line);
   //  sc1.add(circle1);
 
-    circle.set_color({ 0.0f, 0.0f, 0.95f });   // neon cyan
+  
     circle1.set_color({ 1.0f, 0.25f, 0.75f });  // neon pink
     axes.set_color({ 0, 0, 0 });   // neon cyan
 
