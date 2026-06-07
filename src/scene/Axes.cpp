@@ -21,6 +21,8 @@ jmaths::scene::Axes::Axes() {
 jmaths::scene::Axes::Axes(utility::Range x, utility::Range y) {
 
     std::vector<glm::vec3> _verts;
+    m_bound_x = x;
+    m_bound_y = y;
 
     // y axis
     _verts.push_back({ 0, y.min, 0 });
@@ -79,14 +81,31 @@ void jmaths::scene::Axes::plot(std::function<float(float)> fn,
     plot(fn, utility::Range{ -samples, samples, step });
 }
 
-void jmaths::scene::Axes::plot(std::function<float(float)> fn,
-    utility::Range range)
-{
+//Graphs jmaths::scene::Axes::plot(std::function<float(float)> fn, utility::Range range){
+//    std::vector<glm::vec3> verts;
+//
+//    for (float x = range.min; x <= range.max; x += range.step) {
+//        verts.push_back({ x, fn(x), 0.0f });
+//    }
+//
+//    return Graphs(verts);
+//}
+// 
+Graphs jmaths::scene::Axes::plot(std::function<float(float)> fn, utility::Range range) {
     std::vector<glm::vec3> verts;
+
+    // to prevent leakage of graphs out of axes
+    if (range.min < m_bound_x.min)
+        range.min = m_bound_x.min;
+    if (range.max > m_bound_x.max)
+        range.max = m_bound_x.max;
+
+  /*  if (range.min >= range.max || range.step <= 0.0f)
+        return;*/
 
     for (float x = range.min; x <= range.max; x += range.step) {
         verts.push_back({ x, fn(x), 0.0f });
     }
 
-    feed_vert(verts, rdrtype::CONNECT_LINES);
+    return Graphs(verts);
 }

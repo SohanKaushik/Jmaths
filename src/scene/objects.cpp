@@ -51,6 +51,23 @@ void jmaths::scene::JObjects::shift(float x, float y, float z) {
 	transform_dirty = true;
 }
 
+std::vector<glm::vec3> jmaths::scene::JObjects::get_vert() {
+	std::vector<glm::vec3> all;
+	for (auto& geo : m_geo) {
+		auto v = geo->get_verts();
+		all.insert(all.end(), v.begin(), v.end());
+	}
+	return all;
+}
+
+
+void jmaths::scene::JObjects::clear() {
+	for (auto& geo : m_geo) {
+		geo->clear();
+	}
+}
+
+
 
 void jmaths::scene::JObjects::update_transforms() {
 

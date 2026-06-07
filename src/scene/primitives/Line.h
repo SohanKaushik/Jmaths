@@ -14,6 +14,7 @@ namespace jmaths {
 
 		public:
 			Line(glm::vec2, glm::vec2);
+			Line(float a, float b, float length);
 
 		};
 	}

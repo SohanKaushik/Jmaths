@@ -35,6 +35,8 @@ namespace jmaths {
 
 
 			void shift(float x = 0, float y = 0, float z = 0);
+			void clear();
+			std::vector<glm::vec3> get_vert();
 
 		public:
 			// will deal with it later

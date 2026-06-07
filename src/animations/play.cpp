@@ -1,4 +1,6 @@
+#define GLM_ENABLE_EXPERIMENTAL
 #include "play.h"
+#include <glm/gtx/string_cast.hpp>
 
 namespace jmaths::animations {
 
@@ -6,38 +8,40 @@ namespace jmaths::animations {
 	Animations::Animations() {
 	}
 
-    void Animations::play(const std::vector<glm::vec3>& points, float duration)
-    {
-        m_points = points;
+    Animations::Animations(jmaths::scene::JObjects& obj, std::vector<glm::vec3> verts, float duration) {
+        m_target = &obj;
         m_duration = duration;
-        m_start = glfwGetTime();
-        m_cursor = 0;
+        m_points = verts;
+        m_elapsed = 0.0f;
 
-        if (!m_geo)
-            m_geo = std::make_unique<geometry>(m_points, rdrtype::CONNECT_LINES);
     }
 
-    void Animations::render()
-    {
-        float progress = (glfwGetTime() - m_start) / m_duration;
-        progress = glm::clamp(progress, 0.0f, 1.0f);
 
-        size_t target = (size_t)(progress * m_points.size());
+    void Animations::update() {
 
-        if (target > m_cursor)
-        {
-            m_cursor = target;
+        if (is_done) return;
+
+        m_elapsed += Time::deltaTime;
+
+        float t = glm::clamp(m_elapsed / m_duration, 0.0f, 1.0f);
+
+        size_t count = (size_t)(t * m_points.size());
+
+
+        if (count > m_cursor) {
+            m_cursor = count;
 
             std::vector<glm::vec3> visible(
                 m_points.begin(),
                 m_points.begin() + m_cursor
             );
 
-            //m_geo->update(visible);
+            m_target->m_geo[0]->update(visible, rdrtype::CONNECT_LINES);
         }
 
-        if (m_geo)
-            m_geo->draw();
+        if (t >= 1) {
+            is_done = true;
+        }
     }
 }
 

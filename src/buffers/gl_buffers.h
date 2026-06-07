@@ -50,6 +50,16 @@ class geometry {
                 GL_DYNAMIC_DRAW);
         }
     
+        std::vector<glm::vec3>& get_verts() {
+            return m_vert;
+        }
+
+        void clear() {
+            m_vert.clear();
+            glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
+            glBufferData(GL_ARRAY_BUFFER, 0, nullptr, GL_DYNAMIC_DRAW);
+        }
+
         void draw() {
             glBindVertexArray(m_vao);
             glDrawArrays(static_cast<GLenum>(m_type), 0, static_cast<GLsizei>(m_vert.size()));

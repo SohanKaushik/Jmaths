@@ -1,8 +1,11 @@
 #pragma once
+#define GLM_ENABLE_EXPERIMENTAL
+
 #include "scene.h"
 #include "../window/window.h"
 
 #include <cassert>  // for assert
+#include <glm/gtx/string_cast.hpp>
 
 namespace jmaths::scene {
 
@@ -54,17 +57,26 @@ namespace jmaths::scene {
     }
 
     void Scene::update() {
+        Time::update();
+
         if (window) {
-            glm::vec3 bg = { 0.12f, 0.12f, 0.14f };
-            glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+            glClearColor(m_bgclr.x, m_bgclr.y, m_bgclr.z, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         }
 
         m_shader.use();
 
+        // update transforms
         for (auto* obj : _all_objects) {
             obj->update_transforms();
         }
+
+        //// renders the animations
+        for (auto& anim : _all_animations) {
+            anim->update();
+        }
+
+        // renders objects
         for (auto* obj : _all_objects) {
             m_shader.SetUniformMat4f("pv", camera->get_pvmatrix());
             m_shader.SetUniformMat4f("u_model", obj->get_model());
@@ -80,13 +92,25 @@ namespace jmaths::scene {
         _all_objects.push_back(&obj);
     }
 
-   
 
 
-    /*void Scene::plot(std::function<float(float)> fn) {
-        for (float x = -5.0f; x <= 5.0f; x += 1.0f) {
-            float y = fn(x);
-            printf("x = %.1f, y = %.1f\n", x, y);
-        }
-    }*/
+
+    void jmaths::scene::Scene::set_bg(glm::vec3 color) {
+        m_bgclr = color;
+    }
+
+    void jmaths::scene::Scene::play(JObjects& obj, float duration) {
+
+        // storing all the verts
+        auto grab = obj.get_vert();
+
+        //.. sending it to animations
+        _all_animations.push_back(std::make_unique<jmaths::animations::Animations>(obj, grab, duration));
+
+        // clearing the target obj so that it would not render fully at first
+        obj.clear();
+        
+        // adding to the scene, thus it can draw 
+        add(obj);
+    }
 }
